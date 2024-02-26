@@ -7,7 +7,7 @@ const ProductList = () => {
     const [hasMore, setHasMore] = useState(true)
     const loaderRef = useRef(null)
     useEffect(() => {
-
+        // fetching function 
         const fetchData = async () => {
             const res = await fetch(`https://dummyjson.com/products?limit=${perPageData}&skip=${perPageData * page}`)
             const data = await res.json()
@@ -20,8 +20,10 @@ const ProductList = () => {
             }
 
         }
+        // the observing function 
         const observing = (items) => {
             const item = items[0]
+            // main logic for loading when the intersection api is observing 
             if (item.isIntersecting && hasMore) {
                 fetchData()
             }
@@ -29,8 +31,11 @@ const ProductList = () => {
                 console.log("loader is not visible");
             }
         }
+        // setting up observer 
         const observer = new IntersectionObserver(observing)
+        // logic for setting up the observer div 
         if (observer && loaderRef.current) {
+
             observer.observe(loaderRef.current)
 
         }
